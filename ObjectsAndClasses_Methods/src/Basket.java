@@ -5,6 +5,7 @@ public class Basket {
     private int totalPrice = 0;
     private int limit;
     private double totalWeight = 0;
+    private int totalCount;
 
     public Basket() {
         increaseCount(1);
@@ -33,7 +34,7 @@ public class Basket {
 
     public void add(String name, int price, int count, double weight) {
         add(name, price, count);
-        totalWeight = (int) (totalWeight + weight);
+        totalWeight = totalWeight + count * weight;
     }
 
     public void add(String name, int price, int count) {
@@ -50,8 +51,14 @@ public class Basket {
             System.out.println("Error occured :(");
             return;
         }
+
         items = items + "\n" + name + " - " +
                 count + " шт. - " + price + "руб.";
+
+    }
+    private int getTotalCount(){
+        totalCount = totalCount + count;
+        return totalCount;
     }
 
     public void clear() {
