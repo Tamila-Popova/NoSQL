@@ -8,7 +8,6 @@ public class Main {
         basket.print("Корзина");
         double totalWeihgt = basket.getTotalWeight();
         System.out.println("Общий вес товаров: " + basket.getTotalWeight());
-
         Basket basket1 = new Basket();
         basket.add("Milk", 40, 50);
         basket.add("Coffee", 20, 40, 50);
@@ -24,10 +23,10 @@ public class Main {
         double totalWeihgt2 = basket.getTotalWeight();
         System.out.println("Общий вес товаров: " + basket.getTotalWeight());
 
-        System.out.println("Общее количество товаров в корзинах: " + Basket.getAllBasketsCount() + "\n" +
-        "Общая стоимость товаров в корзинах: " + Basket.getAllBasketsPrice() + "\n" +
-        "Средняя стоимость товара: " + Basket.averagePriceProduct() + "\n" +
-        "Средняя стоимость корзины: " + Basket.averageCostBasket());
+        System.out.println("Общее количество товаров в корзинах: " + Basket.getAllBasketsCount());
+        System.out.println("Общая стоимость товаров в корзинах: " + Basket.getAllBasketsPrice());
+        System.out.println("Средняя стоимость товара: " + Basket.averagePriceProduct());
+        System.out.println("Средняя стоимость корзины: " + Basket.averageCostBasket());
 
 
         Arithmetic arithmetic = new Arithmetic(3, 5);

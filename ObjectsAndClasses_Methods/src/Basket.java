@@ -11,7 +11,7 @@ public class Basket {
     public Basket() {
         increaseCount(1);
         items = "Список товаров:";
-        this.limit = 1000000;
+        this.limit = 1000000000;
     }
 
     public Basket(int limit) {
@@ -92,12 +92,12 @@ public static int getAllBasketsCount(){
         return allBasketsCount;
 }
 
-    public static void setAllBasketsPrice(int price){
-       Basket.allBasketsPrice += price;
+    public static int setAllBasketsPrice(int price){
+       return allBasketsPrice = allBasketsPrice + price*count;
     }
 
-    public static void setAllBasketsCount(int count){
-        Basket.allBasketsCount +=count;
+    public static int setAllBasketsCount(int count){
+        return allBasketsCount = allBasketsCount + count;
     }
 public static double averagePriceProduct(){
         return (double) allBasketsPrice/allBasketsCount;
