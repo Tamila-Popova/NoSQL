@@ -1,11 +1,25 @@
 public class RAM {
-    public final String type;
+    public final TypeRAM typeRAM;
     public final int volume;
-    public final int weightRAM;
+    public final double weightRAM;
 
-    public RAM(String type, int volume, int weightRAM) {
-        this.type = type;
+    public RAM(TypeRAM typeRAM, int volume, double weightRAM) {
+        this.typeRAM = typeRAM;
         this.volume = volume;
         this.weightRAM = weightRAM;
     }
+
+    public TypeRAM getTypeRAM(){
+        return typeRAM;
+    }public int getVolume(){
+        return volume;
+    }public double getWeightRAM(){
+        return weightRAM;
+    }
+    public String toString(){
+        return "\n" + "Тип: " + getTypeRAM() +
+                "\n" + "Объём: " + getVolume() +
+                "\n" + "Вес: " + getWeightRAM();
+    }
+
 }
