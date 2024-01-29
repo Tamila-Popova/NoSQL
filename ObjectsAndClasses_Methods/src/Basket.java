@@ -55,7 +55,7 @@ public class Basket {
 
         items = items + "\n" + name + " - " +
                 count + " шт. - " + price + "руб.";
-setAllBasketsPrice(price);
+setAllBasketsPrice(price, count);
 setAllBasketsCount(count);
     }
 
@@ -92,7 +92,7 @@ public static int getAllBasketsCount(){
         return allBasketsCount;
 }
 
-    public static int setAllBasketsPrice(int price){
+    public static int setAllBasketsPrice(int price, int count){
        return allBasketsPrice = allBasketsPrice + price*count;
     }
 
