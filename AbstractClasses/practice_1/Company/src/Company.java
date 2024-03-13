@@ -1,6 +1,5 @@
 
 import java.util.*;
-import java.util.stream.Collector;
 
 public class Company {
 
