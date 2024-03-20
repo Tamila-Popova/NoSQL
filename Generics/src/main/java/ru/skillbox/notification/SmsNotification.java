@@ -1,16 +1,12 @@
 package ru.skillbox.notification;
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+import java.util.List;
+@AllArgsConstructor
+@Getter
 public class SmsNotification implements Notification {
     private List<String> receiver;
-
-    public SmsNotification(List<String> receiver) {
-        this.receiver = receiver;
-    }
-
-    public List<String> getReceiver() {
-        return receiver;
-    }
 
     public String formattedMessage(String message) {
         return message;
