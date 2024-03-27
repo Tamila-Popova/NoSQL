@@ -2,32 +2,45 @@ package airport;
 
 import com.skillbox.airport.Airport;
 import com.skillbox.airport.Flight;
+import com.skillbox.airport.Terminal;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
 
     public static long findCountAircraftWithModelAirbus(Airport airport, String model) {
-        //TODO Метод должен вернуть количество самолетов указанной модели.
-        // подходят те самолеты, у которых name начинается со строки model
-        return 0;
+        long count = airport.getAllAircrafts().stream()
+                .filter(x -> x.getModel().contains(model))
+                .count();
+        return count;
     }
 
     public static Map<String, Integer> findMapCountParkedAircraftByTerminalName(Airport airport) {
-        //TODO Метод должен вернуть словарь с количеством припаркованных самолетов в каждом терминале.
-        return Collections.emptyMap();
+        Map<String, Integer> collect = airport.getTerminals().stream()
+                .collect(Collectors.toMap(Terminal::getName, terminal -> terminal.getParkedAircrafts().size()));
+        return collect;
     }
 
     public static List<Flight> findFlightsLeavingInTheNextHours(Airport airport, int hours) {
-        //TODO Метод должен вернуть список отправляющихся рейсов в ближайшее количество часов.
-        return Collections.emptyList();
+        List<Flight> flights = airport.getTerminals().stream()
+                .flatMap(t -> t.getFlights().stream())
+                .filter(f -> f.getType().equals(Flight.Type.DEPARTURE))
+                .filter(f -> f.getDate().isAfter(Instant.now()))
+                .filter(f -> f.getDate().isBefore(Instant.now().plus(hours, ChronoUnit.HOURS)))
+                .collect(Collectors.toList());
+        return flights;
     }
 
     public static Optional<Flight> findFirstFlightArriveToTerminal(Airport airport, String terminalName) {
-        //TODO Найти ближайший прилет в указанный терминал.
-        return Optional.empty();
+        Optional<Flight> flights = airport.getTerminals().stream()
+                .filter(t -> t.getName().equals(terminalName))
+                .flatMap(t -> t.getFlights().stream())
+                .filter(f -> f.getType().equals(Flight.Type.ARRIVAL))
+                .min(Comparator.comparing(f -> f.getDate()));
+        return flights;
     }
+
 }
