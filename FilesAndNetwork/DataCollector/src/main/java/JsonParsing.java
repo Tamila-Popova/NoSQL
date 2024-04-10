@@ -19,8 +19,8 @@ public class JsonParsing {
             JsonNode station_name = station.get("station_name");
             JsonNode depth = station.get("depth");
             StationJSON stationJSON = new StationJSON();
-            stationJSON.setStation_name(station_name.toString());
-            stationJSON.setDepth(depth.toString());
+            stationJSON.setStation_name(station_name.asText());
+            stationJSON.setDepth(depth.asText());
             stationJSONList.add(stationJSON);
 
         }
@@ -30,7 +30,7 @@ public class JsonParsing {
     public static void printJson(String path) throws IOException {
         parseJson(path);
         for (StationJSON station : stationJSONList) {
-            System.out.println(station.toString());
+            System.out.println(station);
         }
     }
 }

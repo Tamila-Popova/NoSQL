@@ -36,7 +36,7 @@ public static List<StationCSV> metroStationCSV = new ArrayList<>();
     public static void printCsv(String path) throws IOException {
         parseCsv(path);
         for (StationCSV station : metroStationCSV) {
-            System.out.println(station.toString());
+            System.out.println(station);
         }
     }
 
