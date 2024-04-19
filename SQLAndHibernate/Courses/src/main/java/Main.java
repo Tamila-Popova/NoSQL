@@ -15,10 +15,8 @@ public class Main {
         Metadata metadata = new MetadataSources(registry).getMetadataBuilder().build();
         SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
         Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        String hql = "SELECT c.id, s.id " + "FROM PurchaseList p " +
-                "INNER JOIN Courses AS c ON c.name = p.courseName " +
-                "INNER JOIN Students AS s ON s.name = p.studentName";
+       session.beginTransaction();
+      /*  String hql = "SELECT course_name, student_name FROM PurchaseList ";
         Query query = session.createQuery(hql);
         List<Object[]> rows = query.getResultList();
 
@@ -35,8 +33,29 @@ public class Main {
             LPL.setStudentId(key.getStudentId());
             session.persist(LPL);
         }
+*/
+        List<PurchaseList> purchaseLists = session.createQuery("FROM PurchaseList").list();
 
-        transaction.commit();
+        for(PurchaseList purchase : purchaseLists){
+
+            Students students = (Students) session.createQuery("FROM Students s WHERE s.name = :studentName ")
+                    .setParameter("studentName", purchase.getStudentName())
+                    .uniqueResult();
+            Courses courses = (Courses) session.createQuery("FROM Courses c WHERE c.name = :courseName ")
+                    .setParameter("courseName", purchase.getCourseName())
+                    .uniqueResult();
+            LinkedPurchaseList LPL = new LinkedPurchaseList();
+            LinkedPurchaseListKey key = new LinkedPurchaseListKey();
+
+            key.setStudentId(students.getId());
+            key.setCourseId(courses.getId());
+
+            LPL.setId(key);
+            LPL.setCourseId(key.getCourseId());
+            LPL.setStudentId(key.getStudentId());
+            session.persist(LPL);
+        }
+        session.getTransaction().commit();
         session.close();
         sessionFactory.close();
     }
