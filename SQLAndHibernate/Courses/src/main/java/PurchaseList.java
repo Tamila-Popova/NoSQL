@@ -10,10 +10,11 @@ import java.sql.Date;
 @Entity
 @Table(name = "PurchaseList")
 public class PurchaseList {
-    @Id
-    @Column(name = "student_name")
+    @EmbeddedId
+    private PurchaseListKey id;
+    @Column(name = "student_name", insertable = false, updatable = false)
     private String studentName;
-    @Column(name = "course_name")
+    @Column(name = "course_name", insertable = false, updatable = false)
     private String courseName;
     private int price;
     @Column(name = "subscription_date")

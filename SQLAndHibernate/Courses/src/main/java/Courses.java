@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Сourses")
+@Table(name = "Courses")
 @Getter
 @Setter
 @AllArgsConstructor
