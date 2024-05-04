@@ -1,7 +1,15 @@
 public class Account {
-
     private long money;
     private String accNumber;
+    private boolean isBlocked = false;
+    public Account(String accNumber, long money){
+        this.money = money;
+        this.accNumber = accNumber;
+    }
+
+    public void blocked() {
+       this.isBlocked = true;
+    }
 
     public long getMoney() {
         return money;
