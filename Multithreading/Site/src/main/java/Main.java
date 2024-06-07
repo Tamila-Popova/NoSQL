@@ -1,20 +1,26 @@
-import java.util.List;
 import java.util.concurrent.ForkJoinPool;
 
 public class Main {
+    private static final String url = "https://sendel.ru/";
+    private static final String domain = "sendel.ru";
+
     public static void main(String[] args) {
-        String url = "https://www.bio-faq.ru";
-        Links pageNode = new Links(url);
-        new ForkJoinPool().invoke(new Parser(pageNode));
-        printLinks(pageNode, 0);
+        ForkJoinPool pool = new ForkJoinPool();
+        Parser processor = new Parser(new Links(url), domain);
+        Links rootNode = pool.invoke(processor);
+        printLinks(rootNode, 0);
     }
 
     private static void printLinks(Links root, int depth) {
         for (int i = 0; i < depth; i++) {
-           System.out.println(root.getUrl());
+            System.out.println("\t");
+
         }
+        System.out.println(root.getUrl());
         root.getChildLinks().forEach(link -> {
-            printLinks(link, depth+1);
+            printLinks(link, depth + 1);
         });
     }
 }
+
+

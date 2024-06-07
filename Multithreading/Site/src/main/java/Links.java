@@ -18,6 +18,10 @@ public class Links {
         return childLinks;
     }
 
+    public void setChildLinks(List<Links> childLinks) {
+        this.childLinks = childLinks;
+    }
+
     public void addChildURL(String url) {
         childLinks.add(new Links(url));
     }
