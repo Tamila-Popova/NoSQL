@@ -12,11 +12,7 @@ public class Main {
     }
 
     private static void printLinks(Links root, int depth) {
-        for (int i = 0; i < depth; i++) {
-            System.out.println("\t");
-
-        }
-        System.out.println(root.getUrl());
+        System.out.println("\t".repeat(depth) + root.getUrl());
         root.getChildLinks().forEach(link -> {
             printLinks(link, depth + 1);
         });

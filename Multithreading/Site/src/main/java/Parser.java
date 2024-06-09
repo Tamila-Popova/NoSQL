@@ -25,7 +25,7 @@ public class Parser extends RecursiveTask<Links> {
     protected Links compute() {
         try {
             Thread.sleep(300);
-            Document doc = Jsoup.connect(links.getUrl()).userAgent("GoogleChrome").get();
+            Document doc = Jsoup.connect(links.getUrl()).get();
             Elements elements = doc.select("a");
             for (Element element : elements) {
                 String attrUrl = element.absUrl("abs:href");
