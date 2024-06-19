@@ -1,7 +1,6 @@
 package com.example.controller;
 
 import com.example.dto.NewsDto;
-import com.example.exception.NewsNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import com.example.services.NewsCRUDService;
@@ -18,13 +17,8 @@ public class NewsController {
     }
 
     @GetMapping("/{id}")
-    public NewsDto getById(@PathVariable Long id) throws NewsNotFoundException {
-        NewsDto dto = newsCRUDService.getById(id);
-        if (dto != null) {
-            return dto;
-        } else {
-            throw new NewsNotFoundException("Новость с Id " + id + " не найдена!");
-        }
+    public NewsDto getById(@PathVariable Long id) {
+        return newsCRUDService.getById(id);
     }
 
     @GetMapping
@@ -47,13 +41,8 @@ public class NewsController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteById(@PathVariable Long id) throws NewsNotFoundException {
-        NewsDto dto = newsCRUDService.getById(id);
-        if (dto != null) {
-            newsCRUDService.deleteById(id);
-        } else {
-            throw new NewsNotFoundException("Новость с Id " + id + " не найдена!");
-        }
+    public void deleteById(@PathVariable Long id){
+        newsCRUDService.deleteById(id);
     }
 }
 

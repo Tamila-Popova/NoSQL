@@ -1,6 +1,7 @@
 package com.example.services;
 
 import com.example.dto.NewsDto;
+import com.example.exception.NewsNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -12,8 +13,13 @@ public class NewsCRUDService implements CRUDService<NewsDto> {
     private final TreeMap<Long, NewsDto> storage = new TreeMap<>();
 
     @Override
-    public NewsDto getById(Long id) {
-        return storage.get(id);
+    public NewsDto getById(Long id) throws NewsNotFoundException {
+       NewsDto dto = storage.get(id);
+        if (dto != null) {
+            return dto;
+        } else {
+            throw new NewsNotFoundException("Новость с Id " + id + " не найдена!");
+        }
     }
 
     @Override
@@ -38,8 +44,12 @@ public class NewsCRUDService implements CRUDService<NewsDto> {
         storage.put(id, item);
     }
 
-    @Override
-    public void deleteById(Long id) {
-        storage.remove(id);
+        public void deleteById(Long id) throws NewsNotFoundException {
+            NewsDto dto = storage.get(id);
+            if (dto != null) {
+                storage.remove(id);
+            } else {
+                throw new NewsNotFoundException("Новость с Id " + id + " не найдена!");
+            }
     }
 }
