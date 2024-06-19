@@ -1,14 +1,12 @@
 package com.example.controller;
 
-import com.example.dto.InfoDto;
 import com.example.dto.NewsDto;
+import com.example.exception.NewsNotFoundException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.services.NewsCRUDService;
 
 import java.util.Collection;
-
 
 @RestController
 @RequestMapping("/api/news")
@@ -20,14 +18,13 @@ public class NewsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<InfoDto> getById(@PathVariable Long id) {
-        String message = "Новость с ID " + id + " не найдена";
-        InfoDto infoDto = new InfoDto(message);
-        if(newsCRUDService.getById(id) == null){
-            return new ResponseEntity(infoDto, HttpStatus.NOT_FOUND);
+    public NewsDto getById(@PathVariable Long id) throws NewsNotFoundException {
+        NewsDto dto = newsCRUDService.getById(id);
+        if (dto != null) {
+            return dto;
+        } else {
+            throw new NewsNotFoundException("Новость с Id " + id + " не найдена!");
         }
-        newsCRUDService.getById(id);
-        return new ResponseEntity(newsCRUDService.getById(id), HttpStatus.OK);
     }
 
     @GetMapping
@@ -36,26 +33,28 @@ public class NewsController {
     }
 
     @PostMapping
-    public ResponseEntity create(@RequestBody NewsDto newsDto) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public NewsDto create(@RequestBody NewsDto newsDto) {
         newsCRUDService.create(newsDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newsDto);
+        return newsDto;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@PathVariable Long id, @RequestBody NewsDto newsDto) {
+    public NewsDto update(@PathVariable Long id, @RequestBody NewsDto newsDto) {
         newsCRUDService.update(id, newsDto);
-        return ResponseEntity.status(HttpStatus.OK).body(newsDto);
+        return newsDto;
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<InfoDto> deleteById(@PathVariable Long id) {
-        String message = "Новость с ID " + id + " не найдена";
-        InfoDto infoDto = new InfoDto(message);
-        if(newsCRUDService.getById(id) == null){
-            return new ResponseEntity(infoDto, HttpStatus.NOT_FOUND);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable Long id) throws NewsNotFoundException {
+        NewsDto dto = newsCRUDService.getById(id);
+        if (dto != null) {
+            newsCRUDService.deleteById(id);
+        } else {
+            throw new NewsNotFoundException("Новость с Id " + id + " не найдена!");
         }
-        newsCRUDService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
+
 

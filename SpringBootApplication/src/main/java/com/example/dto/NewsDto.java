@@ -14,10 +14,11 @@ public class NewsDto {
     private String title;
     private String text;
     private Instant date;
-    public  NewsDto(Long id, String title, String text, Instant date){
+
+    public NewsDto(Long id, String title, String text, Instant date) {
         this.id = id;
-        this.title=title;
-        this.text=text;
-        this.date=Instant.now();
+        this.title = title;
+        this.text = text;
+        this.date = Instant.now();
     }
 }

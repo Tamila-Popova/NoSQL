@@ -42,5 +42,4 @@ public class NewsCRUDService implements CRUDService<NewsDto> {
     public void deleteById(Long id) {
         storage.remove(id);
     }
-
 }
